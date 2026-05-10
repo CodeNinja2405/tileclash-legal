@@ -1,0 +1,2 @@
+# tileclash-legal
+privacy document
