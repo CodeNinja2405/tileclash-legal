@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TileClash - Competitive Tile Matching Game</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0D0D1A 0%, #1A0B4E 50%, #0D0D1A 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo { font-size: 22px; font-weight: 900; letter-spacing: 3px; color: #fff; }
+    .logo span { color: #6B48FF; }
+    nav a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-left: 24px; }
+    nav a:hover { color: #fff; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(107,72,255,0.2);
+      border: 1px solid rgba(107,72,255,0.5);
+      color: #A78BFA;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font-size: clamp(42px, 8vw, 72px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 0%, #A78BFA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 48px;
+      letter-spacing: 1.5px;
+    }
+    .tiles {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+    .tile {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      animation: float 3s ease-in-out infinite;
+    }
+    .tile:nth-child(1) { background: linear-gradient(135deg,#6B48FF,#3B82F6); animation-delay: 0s; }
+    .tile:nth-child(2) { background: linear-gradient(135deg,#F59E0B,#EF4444); animation-delay: 0.3s; }
+    .tile:nth-child(3) { background: linear-gradient(135deg,#10B981,#3B82F6); animation-delay: 0.6s; }
+    .tile:nth-child(4) { background: linear-gradient(135deg,#EC4899,#8B5CF6); animation-delay: 0.9s; }
+    .tile:nth-child(5) { background: linear-gradient(135deg,#F59E0B,#10B981); animation-delay: 1.2s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #6B48FF, #3B82F6);
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 32px rgba(107,72,255,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(107,72,255,0.55); }
+    .cta svg { width: 22px; height: 22px; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 960px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .feature .icon { font-size: 36px; margin-bottom: 14px; }
+    .feature h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+    .feature p  { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 12px; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">TILE<span>CLASH</span></div>
+    <div>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">NOW ON GOOGLE PLAY</div>
+    <h1>TILECLASH</h1>
+    <p class="tagline">Competitive Tile Matching Game</p>
+
+    <div class="tiles">
+      <div class="tile">🎴</div>
+      <div class="tile">⭐</div>
+      <div class="tile">💎</div>
+      <div class="tile">🔥</div>
+      <div class="tile">⚡</div>
+    </div>
+
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.diris.tileclash" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27A2 2 0 0 1 1 21.76V2.24a2 2 0 0 1 .18-.85 2 2 0 0 1 1.25-1.1L13.9 12 2.43 23.47a2 2 0 0 1-.56.3h-.69zM16.34 8.87l-2.89-1.67-3.19 3.19 3 3a2 2 0 0 1 .29.33l3-1.73-3.59-2.07 3.38-1.05zM19.82 10.78l-2-1.14-3.33 1.93 3.49 2.01 1.84-1.06a2 2 0 0 0 0-3.48l-1.84-1.06 1.84 2.8zM2.68.28 14.31 11.91l-2.9 2.9L2.43.53A2 2 0 0 1 2.68.28z"/></svg>
+      Get it on Google Play
+    </a>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <div class="icon">🏆</div>
+      <h3>Competitive Modes</h3>
+      <p>Play 1v1 online, challenge friends locally, or race the clock in Time Attack mode.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🧩</div>
+      <h3>Daily Challenges</h3>
+      <p>Fresh puzzles every day. Climb the global leaderboard and prove your memory skills.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">⚡</div>
+      <h3>Power-ups</h3>
+      <p>Use Peek, Shuffle, Magnet, and more to outsmart your opponent at the right moment.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🎖️</div>
+      <h3>Levels and Achievements</h3>
+      <p>Earn XP, unlock new tile styles, and collect achievements as you master the game.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="mailto:d.iris.devstudio@gmail.com">Contact</a>
+    </p>
+    <br>
+    <p>2026 D-Iris Studio. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
