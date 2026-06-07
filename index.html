@@ -1,197 +1,366 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TileClash - Competitive Tile Matching Game</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>TileClash | Competitive Tile Matching Game</title>
+  <meta name="description" content="Compete in high-stakes tile matching battles. Play online, challenge friends, or race the clock. Download TileClash free on Google Play."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-container": "#00f2ff",
+            "on-surface": "#e3e0f4",
+            "surface-container-low": "#1a1a28",
+            "surface-container-high": "#292937",
+            "surface-variant": "#343342",
+            "secondary-container": "#ff24e4",
+            "surface-tint": "#00dbe7",
+            "outline-variant": "#3a494b",
+            "surface-container-highest": "#343342",
+            "outline": "#849495",
+            "on-secondary-container": "#520049",
+            "primary-fixed": "#74f5ff",
+            "secondary-fixed": "#ffd7f0",
+            "surface-dim": "#12121f",
+            "surface-bright": "#383847",
+            "background": "#12121f",
+            "on-secondary": "#5e0053",
+            "on-background": "#e3e0f4",
+            "on-primary": "#00363a",
+            "on-surface-variant": "#b9cacb",
+            "primary": "#e1fdff",
+            "surface": "#12121f",
+            "on-primary-fixed": "#002022",
+            "secondary": "#fface8",
+            "surface-container": "#1e1e2c",
+            "primary-fixed-dim": "#00dbe7",
+            "surface-container-lowest": "#0d0d1a",
+            "on-tertiary": "#2e009c",
+            "error": "#ffb4ab"
+          },
+          fontFamily: {
+            "display": ["Anybody"],
+            "body": ["Space Grotesk"]
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #0D0D1A 0%, #1A0B4E 50%, #0D0D1A 100%);
-      color: #fff;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .logo { font-size: 22px; font-weight: 900; letter-spacing: 3px; color: #fff; }
-    .logo span { color: #6B48FF; }
-    nav a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-left: 24px; }
-    nav a:hover { color: #fff; }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px 60px;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(107,72,255,0.2);
-      border: 1px solid rgba(107,72,255,0.5);
-      color: #A78BFA;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      letter-spacing: 1px;
-    }
-    h1 {
-      font-size: clamp(42px, 8vw, 72px);
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #fff 0%, #A78BFA 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .tagline {
-      font-size: 18px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 48px;
-      letter-spacing: 1.5px;
-    }
-    .tiles {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 56px;
-      flex-wrap: wrap;
-    }
-    .tile {
-      width: 68px;
-      height: 68px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      border: 1px solid rgba(255,255,255,0.15);
-      animation: float 3s ease-in-out infinite;
-    }
-    .tile:nth-child(1) { background: linear-gradient(135deg,#6B48FF,#3B82F6); animation-delay: 0s; }
-    .tile:nth-child(2) { background: linear-gradient(135deg,#F59E0B,#EF4444); animation-delay: 0.3s; }
-    .tile:nth-child(3) { background: linear-gradient(135deg,#10B981,#3B82F6); animation-delay: 0.6s; }
-    .tile:nth-child(4) { background: linear-gradient(135deg,#EC4899,#8B5CF6); animation-delay: 0.9s; }
-    .tile:nth-child(5) { background: linear-gradient(135deg,#F59E0B,#10B981); animation-delay: 1.2s; }
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-18px) rotate(4deg); }
     }
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #6B48FF, #3B82F6);
-      color: #fff;
-      text-decoration: none;
-      padding: 16px 36px;
-      border-radius: 16px;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 32px rgba(107,72,255,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 6px rgba(0,242,255,0.4); }
+      50%       { box-shadow: 0 0 22px rgba(0,242,255,0.85); }
     }
-    .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(107,72,255,0.55); }
-    .cta svg { width: 22px; height: 22px; }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      max-width: 960px;
-      margin: 80px auto;
-      padding: 0 24px;
+    @keyframes shine {
+      0%   { left: -100%; }
+      100% { left: 160%; }
     }
-    .feature {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 28px 24px;
-      text-align: center;
+    .tile-float { animation: float 6s ease-in-out infinite; }
+    .neon-pulse  { animation: pulse-glow 2.4s ease-in-out infinite; }
+    .shine-btn   { position: relative; overflow: hidden; }
+    .shine-btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: skewX(-20deg);
+      animation: shine 3.2s infinite;
     }
-    .feature .icon { font-size: 36px; margin-bottom: 14px; }
-    .feature h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-    .feature p  { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.35);
-      font-size: 13px;
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(162,0,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(162,0,255,0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
-    footer a { color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 12px; }
-    footer a:hover { color: #fff; }
+    .glass {
+      background: rgba(30,30,44,0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0,242,255,0.2);
+    }
   </style>
 </head>
-<body>
 
-  <nav>
-    <div class="logo">TILE<span>CLASH</span></div>
-    <div>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
+<body class="bg-background text-on-surface font-body grid-bg selection:bg-primary-container selection:text-on-primary">
+
+<!-- ── Nav ─────────────────────────────────────────────────────── -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-10 h-18 py-4 bg-surface-container/60 backdrop-blur-xl border-b border-primary-container/30 shadow-xl shadow-primary-container/10">
+  <span class="font-display font-black text-2xl tracking-widest text-primary-fixed-dim drop-shadow-[0_0_10px_#00dbe7]">
+    TILE<span class="text-secondary-container">CLASH</span>
+  </span>
+  <div class="flex items-center gap-4">
+    <a href="privacy.html" class="hidden sm:block text-sm text-on-surface-variant hover:text-primary transition-colors">Privacy</a>
+    <a href="terms.html"   class="hidden sm:block text-sm text-on-surface-variant hover:text-primary transition-colors">Terms</a>
+    <a href="https://play.google.com/store/apps/details?id=com.diris.tileclash"
+       class="shine-btn px-5 py-2 bg-primary-container text-on-primary rounded-lg font-display font-bold text-sm tracking-wide hover:shadow-[0_0_16px_#00f2ff] transition-all">
+      Download Free
+    </a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden px-6 md:px-10 pt-18">
+
+  <!-- Background glow blobs -->
+  <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-primary-container/10 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-secondary-container/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+  <!-- Floating tiles -->
+  <div class="tile-float absolute top-1/4 left-12 md:left-24 w-20 h-20 glass rounded-2xl flex items-center justify-center text-3xl opacity-70 border-primary-container/40" style="animation-delay:0s">🎴</div>
+  <div class="tile-float absolute top-1/3 right-12 md:right-28 w-16 h-16 glass rounded-2xl flex items-center justify-center text-2xl opacity-60 border-secondary-container/40" style="animation-delay:-2s">⭐</div>
+  <div class="tile-float absolute bottom-1/3 left-20 md:left-40 w-14 h-14 glass rounded-2xl flex items-center justify-center text-xl opacity-50 border-primary-container/30" style="animation-delay:-4s">💎</div>
+  <div class="tile-float absolute bottom-1/4 right-16 md:right-36 w-16 h-16 glass rounded-2xl flex items-center justify-center text-2xl opacity-55 border-secondary-container/30" style="animation-delay:-1s">🔥</div>
+  <div class="tile-float absolute top-2/3 right-6 md:right-16 w-12 h-12 glass rounded-xl flex items-center justify-center text-lg opacity-40" style="animation-delay:-3s">⚡</div>
+
+  <!-- Hero content -->
+  <div class="relative z-10 text-center max-w-3xl">
+    <div class="inline-block px-4 py-1 glass rounded-full mb-6 text-primary-fixed-dim font-display font-bold text-xs tracking-[0.2em] uppercase">
+      Now on Google Play
     </div>
-  </nav>
-
-  <section class="hero">
-    <div class="badge">NOW ON GOOGLE PLAY</div>
-    <h1>TILECLASH</h1>
-    <p class="tagline">Competitive Tile Matching Game</p>
-
-    <div class="tiles">
-      <div class="tile">🎴</div>
-      <div class="tile">⭐</div>
-      <div class="tile">💎</div>
-      <div class="tile">🔥</div>
-      <div class="tile">⚡</div>
-    </div>
-
-    <a class="cta" href="https://play.google.com/store/apps/details?id=com.diris.tileclash" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27A2 2 0 0 1 1 21.76V2.24a2 2 0 0 1 .18-.85 2 2 0 0 1 1.25-1.1L13.9 12 2.43 23.47a2 2 0 0 1-.56.3h-.69zM16.34 8.87l-2.89-1.67-3.19 3.19 3 3a2 2 0 0 1 .29.33l3-1.73-3.59-2.07 3.38-1.05zM19.82 10.78l-2-1.14-3.33 1.93 3.49 2.01 1.84-1.06a2 2 0 0 0 0-3.48l-1.84-1.06 1.84 2.8zM2.68.28 14.31 11.91l-2.9 2.9L2.43.53A2 2 0 0 1 2.68.28z"/></svg>
+    <h1 class="font-display font-black text-5xl md:text-7xl text-white mb-6 leading-tight drop-shadow-[0_0_24px_rgba(0,242,255,0.5)]">
+      THE ULTIMATE<br>TILE ARENA
+    </h1>
+    <p class="text-lg text-on-surface-variant mb-10 max-w-xl mx-auto leading-relaxed">
+      Flip. Match. Dominate. Compete online, challenge friends, or race the clock in the most competitive tile matching game on mobile.
+    </p>
+    <a href="https://play.google.com/store/apps/details?id=com.diris.tileclash"
+       class="shine-btn inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-primary-container to-surface-tint text-on-primary rounded-xl font-display font-black text-lg uppercase tracking-wider hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(0,242,255,0.4)]">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3.18 23.76a2 2 0 0 1-1-.27A2 2 0 0 1 1 21.76V2.24a2 2 0 0 1 .18-.85 2 2 0 0 1 1.25-1.1L13.9 12 2.43 23.47a2 2 0 0 1-.56.3h-.69zM16.34 8.87l-2.89-1.67-3.19 3.19 3 3a2 2 0 0 1 .29.33l3-1.73-3.59-2.07 3.38-1.05zM19.82 10.78l-2-1.14-3.33 1.93 3.49 2.01 1.84-1.06a2 2 0 0 0 0-3.48l-1.84-1.06 1.84 2.8zM2.68.28 14.31 11.91l-2.9 2.9L2.43.53A2 2 0 0 1 2.68.28z"/>
+      </svg>
       Get it on Google Play
     </a>
-  </section>
+  </div>
+</section>
 
-  <section class="features">
-    <div class="feature">
-      <div class="icon">🏆</div>
-      <h3>Competitive Modes</h3>
-      <p>Play 1v1 online, challenge friends locally, or race the clock in Time Attack mode.</p>
+<!-- ── Game Modes ──────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-10 bg-surface-dim">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <h2 class="font-display font-black text-3xl md:text-4xl text-primary mb-3">Choose Your Arena</h2>
+      <p class="text-on-surface-variant">Eight distinct ways to clash. Pick your mode and start matching.</p>
     </div>
-    <div class="feature">
-      <div class="icon">🧩</div>
-      <h3>Daily Challenges</h3>
-      <p>Fresh puzzles every day. Climb the global leaderboard and prove your memory skills.</p>
-    </div>
-    <div class="feature">
-      <div class="icon">⚡</div>
-      <h3>Power-ups</h3>
-      <p>Use Peek, Shuffle, Magnet, and more to outsmart your opponent at the right moment.</p>
-    </div>
-    <div class="feature">
-      <div class="icon">🎖️</div>
-      <h3>Levels and Achievements</h3>
-      <p>Earn XP, unlock new tile styles, and collect achievements as you master the game.</p>
-    </div>
-  </section>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-  <footer>
-    <p>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="mailto:d.iris.devstudio@gmail.com">Contact</a>
-    </p>
-    <br>
-    <p>2026 D-Iris Studio. All rights reserved.</p>
-  </footer>
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">🤖</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Vs Computer</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Test your skills against adaptive AI at multiple difficulty levels.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">👥</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Vs Friends</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Challenge friends locally or host a private online match.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">🌐</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Online Match</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Instant matchmaking against real players around the world.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">⏱️</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Time Attack</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Clear the board before the clock runs out. Pure speed and memory.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">🧩</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Puzzle</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Fixed challenges designed to test your pattern recognition.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">❤️</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Survival</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">You have lives. Don't waste them. How long can you last?</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">🧘</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Zen</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">No timer, no pressure. Just pure relaxed tile matching flow.</p>
+      </div>
+
+      <div class="glass p-6 rounded-2xl group hover:border-primary-container hover:-translate-y-2 transition-all duration-200">
+        <div class="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center mb-5 text-2xl group-hover:bg-primary-container/20 transition-colors">🪞</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2">Mirror Match</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">Both players share the same board. First to clear their half wins.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Power-ups ───────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-10 bg-surface-container-lowest">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <h2 class="font-display font-black text-3xl md:text-4xl text-secondary mb-3">Power-Ups</h2>
+      <p class="text-on-surface-variant">Six tactical abilities. Use them at the right moment to turn the match.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">👁️</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Peek</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Briefly reveal all face-down tiles on the board.</p>
+        </div>
+      </div>
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">⏭️</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Skip</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Force your opponent to lose their current turn.</p>
+        </div>
+      </div>
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">🔀</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Shuffle</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Randomly reorganize all unmatched tiles on the board.</p>
+        </div>
+      </div>
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">🧲</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Magnet</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Steal a power-up from your opponent's inventory.</p>
+        </div>
+      </div>
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">🕵️</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Spy</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">See your opponent's tiles face-up for a few seconds.</p>
+        </div>
+      </div>
+
+      <div class="glass p-5 rounded-2xl flex items-start gap-4 hover:border-secondary-container/60 transition-all">
+        <div class="w-11 h-11 flex-shrink-0 bg-secondary-container/15 rounded-xl flex items-center justify-center text-xl border border-secondary-container/30">⚡</div>
+        <div>
+          <h4 class="font-display font-bold text-white mb-1">Auto Match</h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Instantly match one tile pair from your category.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Daily Challenge ─────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-10 bg-surface-dim relative overflow-hidden">
+  <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(circle at 60% 50%, #ff24e4 0%, transparent 65%);"></div>
+  <div class="max-w-6xl mx-auto glass p-8 md:p-14 rounded-3xl border-primary-container/30 shadow-2xl relative">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col md:flex-row gap-10 items-center">
+      <div class="flex-1 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 bg-primary-container text-on-primary px-4 py-1.5 rounded-full font-display font-bold text-xs mb-6 uppercase tracking-wider">
+          Daily Challenge
+        </div>
+        <h2 class="font-display font-black text-3xl md:text-4xl text-white mb-5">New Puzzle Every Day</h2>
+        <p class="text-on-surface-variant leading-relaxed mb-8 max-w-md">
+          A fresh hand-crafted board drops every 24 hours. Complete it, submit your score, and climb the global leaderboard. Streak bonuses reward consistency.
+        </p>
+        <a href="https://play.google.com/store/apps/details?id=com.diris.tileclash"
+           class="inline-block px-8 py-3 bg-primary-container text-on-primary rounded-xl font-display font-bold hover:shadow-[0_0_24px_#00f2ff] transition-all">
+          Play Today's Challenge
+        </a>
+      </div>
+      <div class="flex flex-col items-center gap-4">
+        <div class="glass rounded-2xl p-6 text-center neon-pulse min-w-48">
+          <p class="text-xs text-on-surface-variant uppercase tracking-widest mb-3">Resets in</p>
+          <div class="flex gap-2 justify-center">
+            <div class="bg-surface-container-high px-3 py-2 rounded-lg border border-primary-container/20">
+              <span class="font-display font-black text-xl text-primary-fixed-dim block">24</span>
+              <span class="text-xs text-on-surface-variant">hrs</span>
+            </div>
+            <div class="bg-surface-container-high px-3 py-2 rounded-lg border border-primary-container/20">
+              <span class="font-display font-black text-xl text-primary-fixed-dim block">00</span>
+              <span class="text-xs text-on-surface-variant">min</span>
+            </div>
+            <div class="bg-surface-container-high px-3 py-2 rounded-lg border border-primary-container/20">
+              <span class="font-display font-black text-xl text-primary-fixed-dim block">00</span>
+              <span class="text-xs text-on-surface-variant">sec</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 text-center">
+          <div class="glass rounded-xl px-5 py-3">
+            <p class="font-display font-black text-2xl text-secondary">XP</p>
+            <p class="text-xs text-on-surface-variant">Bonus</p>
+          </div>
+          <div class="glass rounded-xl px-5 py-3">
+            <p class="font-display font-black text-2xl text-primary-fixed-dim">🏆</p>
+            <p class="text-xs text-on-surface-variant">Rank</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Download CTA ────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-10 bg-surface-container-lowest text-center">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-display font-black text-4xl md:text-5xl text-white mb-5 drop-shadow-[0_0_16px_rgba(0,242,255,0.4)]">Ready to Clash?</h2>
+    <p class="text-on-surface-variant text-lg mb-10">Free to download. No account required to start playing.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.diris.tileclash"
+       class="shine-btn inline-flex items-center gap-3 px-12 py-5 bg-gradient-to-r from-primary-container to-surface-tint text-on-primary rounded-xl font-display font-black text-xl uppercase tracking-wider hover:scale-105 active:scale-95 transition-all shadow-[0_0_36px_rgba(0,242,255,0.45)]">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3.18 23.76a2 2 0 0 1-1-.27A2 2 0 0 1 1 21.76V2.24a2 2 0 0 1 .18-.85 2 2 0 0 1 1.25-1.1L13.9 12 2.43 23.47a2 2 0 0 1-.56.3h-.69zM16.34 8.87l-2.89-1.67-3.19 3.19 3 3a2 2 0 0 1 .29.33l3-1.73-3.59-2.07 3.38-1.05zM19.82 10.78l-2-1.14-3.33 1.93 3.49 2.01 1.84-1.06a2 2 0 0 0 0-3.48l-1.84-1.06 1.84 2.8zM2.68.28 14.31 11.91l-2.9 2.9L2.43.53A2 2 0 0 1 2.68.28z"/>
+      </svg>
+      Download on Google Play
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer class="py-10 px-6 md:px-10 bg-surface-container-lowest border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-6">
+  <div>
+    <span class="font-display font-black text-xl text-primary-fixed-dim tracking-widest">TILECLASH</span>
+    <p class="text-xs text-on-surface-variant mt-1">2026 D-Iris Studio. All rights reserved.</p>
+  </div>
+  <div class="flex flex-wrap justify-center gap-6 text-sm">
+    <a href="privacy.html" class="text-on-surface-variant hover:text-primary transition-colors">Privacy Policy</a>
+    <a href="terms.html"   class="text-on-surface-variant hover:text-primary transition-colors">Terms of Service</a>
+    <a href="mailto:d.iris.devstudio@gmail.com" class="text-on-surface-variant hover:text-primary transition-colors">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Live countdown to midnight UTC (daily challenge reset)
+  function updateCountdown() {
+    const now  = new Date();
+    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+    const diff = next - now;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const els = document.querySelectorAll('.countdown-val');
+    if (els.length === 3) {
+      els[0].textContent = String(h).padStart(2,'0');
+      els[1].textContent = String(m).padStart(2,'0');
+      els[2].textContent = String(s).padStart(2,'0');
+    }
+  }
+</script>
 
 </body>
 </html>
